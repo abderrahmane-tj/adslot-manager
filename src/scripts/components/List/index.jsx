@@ -1,33 +1,33 @@
 import React, {Component} from 'react';
-import {Button, Dropdown, Grid, Icon, Input, Table} from 'semantic-ui-react';
+import {
+  Form, Grid, Icon, Table,
+} from 'semantic-ui-react';
+const {Input, Select} = Form;
 
 export default class List extends Component {
+  typeOptions = [
+    {text: 'Type 1', value: 1},
+    {text: 'Type 2', value: 2},
+  ];
   render() {
+
     return (
       <Grid container columns={2}>
         <Grid.Column width={3}>
-          <div>
-            <Input fluid icon="search" placeholder='Search ...' />
-          </div>
-          <div>
-            <Dropdown text='Filter by type' icon='filter' floating labeled button className='icon'>
-              <Dropdown.Menu>
-                {[
-                  {text: 'Type 1', value: 1},
-                  {text: 'Type 2', value: 2},
-                ].map(option => <Dropdown.Item key={option.value} {...option} />)}
-              </Dropdown.Menu>
-            </Dropdown>
-          </div>
-          <div>
-            <Dropdown
-              placeholder="Filter by format"
-              options={[
-                {text: 'Format 1', value: 1},
-                {text: 'Format 2', value: 2},
-              ]}
+          <Form>
+            <Input
+              label="Search" placeholder="Search ..."
+              fluid icon="search"
             />
-          </div>
+            <Select
+              placeholder="Filter by type"
+              fluid label="Filter by type"
+              options={this.typeOptions}
+            />
+            <Select
+              fluid label="Filter by format" options={this.typeOptions}
+            />
+          </Form>
         </Grid.Column>
         <Grid.Column width={13}>
           <Table celled>
