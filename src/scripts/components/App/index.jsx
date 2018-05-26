@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Route, Switch, BrowserRouter} from 'react-router-dom';
 import {Grid, Header} from 'semantic-ui-react';
 import AdForm from '../AdForm';
-import List from '../List';
+import List from '../AdList';
 
 export default class App extends Component {
   render() {
