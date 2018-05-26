@@ -18,12 +18,18 @@ export default class List extends Component {
           [AD_TYPE.VIDEO]: 'record',
         };
         return <Icon name={dict[value]} />;
-      }
+      },
     },
     {name: 'url', title: 'URL'},
     {name: 'format', title: 'Format'},
     {name: 'price', title: 'Price'},
-    {name: 'fallback', title: 'Fallback'},
+    {
+      name: 'fallback', title: 'Fallback',
+      render: v => v ? <Icon name="checkmark" color="green" /> : null,
+      props: {
+        textAlign: 'center'
+      }
+    },
   ];
 
   typeOptions = [

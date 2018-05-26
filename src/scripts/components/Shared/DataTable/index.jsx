@@ -26,6 +26,7 @@ export default class DataTable extends Component {
               {columnDefs.map(col => (
                 <Table.Cell
                   key={col.name}
+                  {...col.props}
                 >{
                   col.render
                   ? col.render(row[col.name], row)
