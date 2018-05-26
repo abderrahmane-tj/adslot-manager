@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Form, Grid, Icon} from 'semantic-ui-react';
+import {Button, Divider, Form, Grid, Icon} from 'semantic-ui-react';
 import DataTable from '../Shared/DataTable';
 import {AD_TYPE} from '../../config/constants';
 
@@ -12,7 +12,7 @@ export default class AdList extends Component {
       name: 'type', title: 'Type',
       render(value) {
         let dict = {
-          [AD_TYPE.WEB]: 'browser',
+          [AD_TYPE.WEB]: 'world',
           [AD_TYPE.APP]: 'mobile',
           [AD_TYPE.AUDIO]: 'music',
           [AD_TYPE.VIDEO]: 'record',
@@ -20,11 +20,11 @@ export default class AdList extends Component {
         return <Icon name={dict[value]} />;
       },
       props: {
-        textAlign: 'center'
+        textAlign: 'center',
       },
       headerProps: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     },
     {name: 'url', title: 'URL'},
     {name: 'format', title: 'Format'},
@@ -33,11 +33,11 @@ export default class AdList extends Component {
       name: 'fallback', title: 'Fallback',
       render: v => v ? <Icon name="checkmark" color="green" /> : null,
       props: {
-        textAlign: 'center'
+        textAlign: 'center',
       },
       headerProps: {
-        textAlign: 'center'
-      }
+        textAlign: 'center',
+      },
     },
   ];
 
@@ -158,6 +158,13 @@ export default class AdList extends Component {
             <Select
               fluid label="Filter by format" options={this.typeOptions}
             />
+            <Divider />
+            <Button
+              positive icon labelPosition='right'
+            >
+              Create Ad
+              <Icon name="right plus" />
+            </Button>
           </Form>
         </Grid.Column>
         <Grid.Column width={13}>
