@@ -11,7 +11,7 @@ export default class DataTable extends Component {
   render() {
     const {columnDefs, data} = this.props;
     return (
-      <Table compact selectable>
+      <Table compact selectable singleLine unstackable>
         <Table.Header>
           <Table.Row>
             {columnDefs.map(col => (
