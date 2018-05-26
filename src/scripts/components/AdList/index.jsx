@@ -19,6 +19,12 @@ export default class AdList extends Component {
         };
         return <Icon name={dict[value]} />;
       },
+      props: {
+        textAlign: 'center'
+      },
+      headerProps: {
+        textAlign: 'center'
+      }
     },
     {name: 'url', title: 'URL'},
     {name: 'format', title: 'Format'},
@@ -27,6 +33,9 @@ export default class AdList extends Component {
       name: 'fallback', title: 'Fallback',
       render: v => v ? <Icon name="checkmark" color="green" /> : null,
       props: {
+        textAlign: 'center'
+      },
+      headerProps: {
         textAlign: 'center'
       }
     },

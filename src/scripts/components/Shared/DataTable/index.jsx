@@ -15,7 +15,10 @@ export default class DataTable extends Component {
         <Table.Header>
           <Table.Row>
             {columnDefs.map(col => (
-              <Table.HeaderCell key={col.name}>{col.title}</Table.HeaderCell>
+              <Table.HeaderCell
+                key={col.name}
+                {...col.props}
+              >{col.title}</Table.HeaderCell>
             ))}
           </Table.Row>
         </Table.Header>
