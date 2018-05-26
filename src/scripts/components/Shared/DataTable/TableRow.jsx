@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Table} from 'semantic-ui-react';
 
 const {Row} = Table;
@@ -6,7 +7,7 @@ const {Row} = Table;
 export default class TableRow extends Component {
   handleDoubleClick = () => {
     const {onDoubleClick, data} = this.props;
-    if(onDoubleClick) {
+    if (onDoubleClick) {
       onDoubleClick(data);
     }
   };
@@ -21,3 +22,8 @@ export default class TableRow extends Component {
     );
   }
 }
+
+TableRow.propTypes = {
+  onDoubleClick: PropTypes.func,
+  data: PropTypes.array
+};

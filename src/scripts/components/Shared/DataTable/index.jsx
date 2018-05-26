@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {Table} from 'semantic-ui-react';
 import TableRow from './TableRow';
 
@@ -40,3 +41,8 @@ export default class DataTable extends Component {
     );
   }
 }
+
+DataTable.propTypes = {
+  columnDefs: PropTypes.array,
+  data: PropTypes.array
+};
