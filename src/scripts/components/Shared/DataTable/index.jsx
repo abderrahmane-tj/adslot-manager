@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import {Table} from 'semantic-ui-react';
+import TableRow from './TableRow';
 
 export default class DataTable extends Component {
+  handleRowDoubleClick(data) {
+    console.log(data);
+  }
+
   render() {
     const {columnDefs, data} = this.props;
     return (
-      <Table compact>
+      <Table compact selectable>
         <Table.Header>
           <Table.Row>
             {columnDefs.map(col => (
@@ -15,11 +20,13 @@ export default class DataTable extends Component {
         </Table.Header>
         <Table.Body>
           {data.map(row => (
-            <Table.Row key={row.id}>
+            <TableRow
+              key={row.id} data={row}
+              onDoubleClick={this.handleRowDoubleClick}>
               {columnDefs.map(col => (
                 <Table.Cell key={col.name}>{row[col.name]}</Table.Cell>
               ))}
-            </Table.Row>
+            </TableRow>
           ))}
         </Table.Body>
       </Table>
