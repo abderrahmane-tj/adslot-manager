@@ -25,5 +25,5 @@ export default class TableRow extends Component {
 
 TableRow.propTypes = {
   onDoubleClick: PropTypes.func,
-  data: PropTypes.array
+  data: PropTypes.object
 };
