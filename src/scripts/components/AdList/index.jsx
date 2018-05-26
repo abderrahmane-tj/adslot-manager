@@ -1,13 +1,25 @@
 import React, {Component} from 'react';
-import {Form, Grid} from 'semantic-ui-react';
+import {Form, Grid, Icon} from 'semantic-ui-react';
 import DataTable from '../Shared/DataTable';
+import {AD_TYPE} from '../../config/constants';
 
 const {Input, Select} = Form;
 
 export default class List extends Component {
   columns = [
     {name: 'name', title: 'Name'},
-    {name: 'type', title: 'Type'},
+    {
+      name: 'type', title: 'Type',
+      render(value) {
+        let dict = {
+          [AD_TYPE.WEB]: 'browser',
+          [AD_TYPE.APP]: 'mobile',
+          [AD_TYPE.AUDIO]: 'music',
+          [AD_TYPE.VIDEO]: 'record',
+        };
+        return <Icon name={dict[value]} />;
+      }
+    },
     {name: 'url', title: 'URL'},
     {name: 'format', title: 'Format'},
     {name: 'price', title: 'Price'},
@@ -32,7 +44,7 @@ export default class List extends Component {
       {
         'id': 2692,
         'name': 'Sample APP Adslot acres',
-        'type': 1,
+        'type': 2,
         'url': 'finish.gray/attack',
         'format': '958x787',
         'price': 959,
@@ -41,7 +53,7 @@ export default class List extends Component {
       {
         'id': 3232,
         'name': 'Sample APP Adslot select',
-        'type': 1,
+        'type': 3,
         'url': 'purple.applied/master',
         'format': '130x246',
         'price': 852,
@@ -50,7 +62,7 @@ export default class List extends Component {
       {
         'id': 3853,
         'name': 'Sample APP Adslot bend',
-        'type': 1,
+        'type': 4,
         'url': 'laugh.supply/here',
         'format': '319x299',
         'price': 953,
@@ -77,7 +89,7 @@ export default class List extends Component {
       {
         'id': 6539,
         'name': 'Sample APP Adslot dark',
-        'type': 1,
+        'type': 4,
         'url': 'zoo.share/saved',
         'format': '34x945',
         'price': 516,
@@ -86,7 +98,7 @@ export default class List extends Component {
       {
         'id': 7368,
         'name': 'Sample APP Adslot fast',
-        'type': 1,
+        'type': 3,
         'url': 'away.when/greatly',
         'format': '973x597',
         'price': 46,
@@ -95,7 +107,7 @@ export default class List extends Component {
       {
         'id': 8037,
         'name': 'Sample APP Adslot clear',
-        'type': 1,
+        'type': 2,
         'url': 'blue.cry/steel',
         'format': '390x131',
         'price': 103,
