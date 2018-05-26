@@ -160,11 +160,11 @@ export default class AdList extends Component {
             />
             <Divider />
             <Button
-              positive icon labelPosition='right'
-            >
-              Create Ad
-              <Icon name="right plus" />
-            </Button>
+              content="Create Ad"
+              labelPosition='right'
+              icon="plus"
+              positive
+            />
           </Form>
         </Grid.Column>
         <Grid.Column width={13}>
