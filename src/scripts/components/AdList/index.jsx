@@ -5,7 +5,7 @@ import {AD_TYPE} from '../../config/constants';
 
 const {Input, Select} = Form;
 
-export default class List extends Component {
+export default class AdList extends Component {
   columns = [
     {name: 'name', title: 'Name'},
     {
