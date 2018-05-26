@@ -24,7 +24,13 @@ export default class DataTable extends Component {
               key={row.id} data={row}
               onDoubleClick={this.handleRowDoubleClick}>
               {columnDefs.map(col => (
-                <Table.Cell key={col.name}>{row[col.name]}</Table.Cell>
+                <Table.Cell
+                  key={col.name}
+                >{
+                  col.render
+                  ? col.render(row[col.name], row)
+                  : row[col.name]
+                }</Table.Cell>
               ))}
             </TableRow>
           ))}
