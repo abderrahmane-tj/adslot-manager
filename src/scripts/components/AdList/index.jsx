@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Divider, Form, Grid, Icon} from 'semantic-ui-react';
 import DataTable from '../Shared/DataTable';
 import {AD_TYPE} from '../../config/constants';
+import {request} from '../../helpers/Http';
 
 const {Input, Select} = Form;
 
@@ -45,12 +46,23 @@ export default class AdList extends Component {
     {text: 'Type 1', value: 1},
     {text: 'Type 2', value: 2},
   ];
+
   state = {
-    data: [],
+    adslots: [],
   };
 
+  loadData() {
+    request('adslots').then(({adslots}) => {
+      this.setState({adslots});
+    });
+  }
+
+  componentDidMount() {
+    this.loadData();
+  }
+
   render() {
-    const {data} = this.state;
+    const {adslots} = this.state;
     return (
       <Grid container columns={2}>
         <Grid.Column width={3}>
@@ -79,7 +91,7 @@ export default class AdList extends Component {
         <Grid.Column width={13}>
           <DataTable
             columnDefs={this.columns}
-            data={data}
+            data={adslots}
           />
         </Grid.Column>
       </Grid>
