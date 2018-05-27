@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
 import {Button, Divider, Form} from 'semantic-ui-react';
-import {NONE, TYPE_OPTIONS} from '../../config/constants';
 import {Link} from 'react-router-dom';
+import _pick from 'lodash/pick';
+import {NONE, TYPE_OPTIONS} from '../../config/constants';
+import {request} from '../../helpers/Http';
 
 const {Input, Select, Checkbox} = Form;
 const typeOptions = [
@@ -44,7 +46,14 @@ export default class AdForm extends Component {
   }
 
   componentDidMount() {
-
+    const {editing, id} = this.state;
+    if(editing) {
+      request(`adslots/${id}`).then(({adslot}) => {
+        this.setState(_pick(adslot,
+          ['name', 'type', 'url', 'format', 'price', 'fallback']
+        ));
+      })
+    }
   }
 
   render() {
