@@ -8,20 +8,16 @@ import {
   Grid,
   Loader,
 } from 'semantic-ui-react';
-import {AD_TYPE, ALL} from '../../config/constants';
+import {ALL, TYPE_OPTIONS} from '../../config/constants';
 import {request} from '../../helpers/Http';
 import Table from './Table';
+import {Link} from 'react-router-dom';
 
 const {Input, Select} = Form;
 
-const typeOptions = [
-  // the use of ALL (--all--) as the first option value is a temporary fix,
-  // for a bug in Semantic-UI Dropdown
+const typeFilterOptions = [
   {text: 'All types', value: ALL},
-  {text: 'Web', value: AD_TYPE.WEB},
-  {text: 'App', value: AD_TYPE.APP},
-  {text: 'Audio', value: AD_TYPE.AUDIO},
-  {text: 'Video', value: AD_TYPE.VIDEO},
+  ...TYPE_OPTIONS
 ];
 
 export default class AdList extends Component {
@@ -94,7 +90,7 @@ export default class AdList extends Component {
               <Select
                 fluid
                 label="Filter by type"
-                options={typeOptions}
+                options={typeFilterOptions}
                 value={type}
                 onChange={this.handleTypeChange}
               />
@@ -112,6 +108,8 @@ export default class AdList extends Component {
                 labelPosition='right'
                 icon="plus"
                 positive
+                as={Link}
+                to="/ad/new"
               />
             </Form>
           </Grid.Column>
