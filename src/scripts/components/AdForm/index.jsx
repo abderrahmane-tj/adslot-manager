@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Button, Divider, Form} from 'semantic-ui-react';
+import {Button, Dimmer, Divider, Form, Loader} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import _pick from 'lodash/pick';
-import {NONE, TYPE_OPTIONS} from '../../config/constants';
+import {API_URL, NONE, TYPE_OPTIONS} from '../../config/constants';
 import {request} from '../../helpers/Http';
 
 const {Input, Select, Checkbox} = Form;
@@ -11,8 +11,11 @@ const typeOptions = [
   ...TYPE_OPTIONS,
 ];
 
+const formFields = ['name', 'type', 'url', 'format', 'price', 'fallback'];
+
 export default class AdForm extends Component {
   state = {
+    loading: false,
     editing: false,
     name: '',
     type: NONE,
@@ -31,6 +34,26 @@ export default class AdForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
+
+    const {editing, id} = this.state;
+    let method = editing ? 'PATCH' : 'POST';
+    let path = editing ? `adslots/${id}` : 'adslots';
+    let body = JSON.stringify(_pick(this.state, formFields));
+
+    fetch(API_URL + path, {
+      method,
+      body,
+      headers: {
+        'Accept': '*/*',
+        'Content-Type': 'application/json',
+      },
+    }).then(r => r.json()).then(r => {
+      if (method === 'POST' && !r.error) {
+        const {data: {adslot: {id}}} = r;
+        this.props.history.push(`/adslots/${id}`);
+      }
+      return r;
+    }).catch(e => console.log(e));
   };
 
   static getDerivedStateFromProps(props, prevState) {
@@ -47,70 +70,74 @@ export default class AdForm extends Component {
 
   componentDidMount() {
     const {editing, id} = this.state;
-    if(editing) {
+    if (editing) {
+      this.setState({loading: true});
       request(`adslots/${id}`).then(({adslot}) => {
-        this.setState(_pick(adslot,
-          ['name', 'type', 'url', 'format', 'price', 'fallback']
-        ));
-      })
+        this.setState({..._pick(adslot, formFields), loading: false});
+      });
     }
   }
 
   render() {
     const {
-      name, type, url, format, price, fallback, editing,
+      name, type, url, format, price, fallback, editing, loading,
     } = this.state;
 
     return (
-      <Form onSubmit={this.handleSubmit}>
-        <Input
-          label="Name" value={name}
-          onChange={this.handleNameChange}
-        />
-        <Select
-          label="Type"
-          options={typeOptions}
-          value={type}
-          onChange={this.handleTypeChange}
-        />
-        <Input
-          label="Url" value={url}
-          onChange={this.handleUrlChange}
-        />
-        <Input
-          label="Format" value={format}
-          onChange={this.handleFormatChange}
-        />
-        <Input
-          label="Price" value={price} onChange={this.handlePriceChange}
-        />
-        <Checkbox
-          label="Fallback"
-          checked={fallback}
-          onChange={this.handleFallbackChange}
-          toggle
-        />
-        <Divider hidden />
-        <div>
-          <Button
-            content="Back to List"
-            labelPosition='left'
-            floated="left"
-            icon="chevron left"
-            as={Link}
-            to="/list"
+      <Dimmer.Dimmable as={'div'} dimmed={loading}>
+        <Dimmer active={loading} inverted>
+          <Loader inverted>Loading</Loader>
+        </Dimmer>
+        <Form onSubmit={this.handleSubmit}>
+          <Input
+            label="Name" value={name}
+            onChange={this.handleNameChange}
           />
-          <Button
-            content={editing ? 'Update' : 'Save'}
-            labelPosition="right"
-            floated="right"
-            icon="check"
-            positive
-            type="submit"
-            onClick={this.handleSubmit}
+          <Select
+            label="Type"
+            options={typeOptions}
+            value={type}
+            onChange={this.handleTypeChange}
           />
-        </div>
-      </Form>
+          <Input
+            label="Url" value={url}
+            onChange={this.handleUrlChange}
+          />
+          <Input
+            label="Format" value={format}
+            onChange={this.handleFormatChange}
+          />
+          <Input
+            label="Price" value={price} onChange={this.handlePriceChange}
+          />
+          <Checkbox
+            label="Fallback"
+            checked={fallback}
+            onChange={this.handleFallbackChange}
+            toggle
+          />
+          <Divider hidden />
+          <div>
+            <Button
+              content="Back to List"
+              labelPosition='left'
+              floated="left"
+              icon="chevron left"
+              as={Link}
+              to="/list"
+            />
+            <Button
+              content={editing ? 'Update' : 'Save'}
+              labelPosition="right"
+              floated="right"
+              icon="check"
+              positive
+              type="submit"
+              onClick={this.handleSubmit}
+            />
+          </div>
+        </Form>
+      </Dimmer.Dimmable>
     );
   }
 }
