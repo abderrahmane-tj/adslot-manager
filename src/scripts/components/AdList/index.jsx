@@ -15,7 +15,7 @@ import Table from './Table';
 const {Input, Select} = Form;
 
 const typeOptions = [
-  // the use of --all-- as the first option value is a temporary fix,
+  // the use of ALL (--all--) as the first option value is a temporary fix,
   // for a bug in Semantic-UI Dropdown
   {text: 'All types', value: ALL},
   {text: 'Web', value: AD_TYPE.WEB},
@@ -42,6 +42,8 @@ export default class AdList extends Component {
     this.updateSearchFilter(searchValue);
   };
   updateSearchFilter = _debounce(search => this.setState({search}), 250);
+
+  handleRowDoubleClick = ({id}) => this.props.history.push(`/ad/${id}`);
 
   loadData() {
     return request('adslots');
@@ -114,7 +116,10 @@ export default class AdList extends Component {
             </Form>
           </Grid.Column>
           <Grid.Column width={13}>
-            <Table data={adslots} type={type} format={format} search={search} />
+            <Table
+              data={adslots} type={type} format={format} search={search}
+              onRowDoubleClick={this.handleRowDoubleClick}
+            />
           </Grid.Column>
         </Grid>
       </Dimmer.Dimmable>

@@ -75,7 +75,11 @@ export default class Table extends Component {
   render() {
     const { displayData } = this.state;
     return (
-      <DataTable columnDefs={columns} data={displayData} />
+      <DataTable
+        columnDefs={columns}
+        data={displayData}
+        onRowDoubleClick={this.props.onRowDoubleClick}
+      />
     )
   }
 }
@@ -85,4 +89,5 @@ Table.propTypes = {
   search: PropTypes.string,
   type: PropTypes.any,
   format: PropTypes.any,
+  onRowDoubleClick: PropTypes.func,
 };

@@ -4,9 +4,11 @@ import {Table} from 'semantic-ui-react';
 import TableRow from './TableRow';
 
 export default class DataTable extends Component {
-  handleRowDoubleClick(data) {
-    console.log(data);
-  }
+  handleRowDoubleClick = (data) => {
+    if (this.props.onRowDoubleClick) {
+      this.props.onRowDoubleClick(data);
+    }
+  };
 
   render() {
     const {columnDefs, data} = this.props;
@@ -56,4 +58,5 @@ export default class DataTable extends Component {
 DataTable.propTypes = {
   columnDefs: PropTypes.array,
   data: PropTypes.array,
+  onRowDoubleClick: PropTypes.func,
 };
