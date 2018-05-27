@@ -25,7 +25,7 @@ export default class AdForm extends Component {
   handleUrlChange = (e, {value: url}) => this.setState({url});
   handleFormatChange = (e, {value: format}) => this.setState({format});
   handlePriceChange = (e, {value: price}) => this.setState({price});
-  handleFallbackChange = (e, {value: fallback}) => this.setState({fallback});
+  handleFallbackChange = (e, {checked: fallback}) => this.setState({fallback});
 
   handleSubmit = e => {
     e.preventDefault();
