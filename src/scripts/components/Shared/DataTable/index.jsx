@@ -33,12 +33,20 @@ export default class DataTable extends Component {
                   {...col.props}
                 >{
                   col.render
-                  ? col.render(row[col.name], row)
-                  : row[col.name]
+                    ? col.render(row[col.name], row)
+                    : row[col.name]
                 }</Table.Cell>
               ))}
             </TableRow>
           ))}
+          {data.length === 0 && (
+            <Table.Row>
+              <Table.Cell
+                colSpan={columnDefs.length}
+                textAlign="center"
+              >No matching records found</Table.Cell>
+            </Table.Row>
+          )}
         </Table.Body>
       </Table>
     );
@@ -47,5 +55,5 @@ export default class DataTable extends Component {
 
 DataTable.propTypes = {
   columnDefs: PropTypes.array,
-  data: PropTypes.array
+  data: PropTypes.array,
 };
