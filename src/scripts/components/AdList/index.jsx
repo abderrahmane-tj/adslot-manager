@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import _debounce from 'lodash/debounce';
 import {
   Button,
   Dimmer,
@@ -31,11 +32,16 @@ export default class AdList extends Component {
     formatOptions: [],
     loading: true,
     search: '',
+    searchValue: '',
   };
 
   handleTypeChange = (e, {value: type}) => this.setState({type});
   handleFormatChange = (e, {value: format}) => this.setState({format});
-  handleSearchChange = (e, {value: search}) => this.setState({search});
+  handleSearchChange = (e, {value: searchValue}) => {
+    this.setState({searchValue});
+    this.updateSearchFilter(searchValue);
+  };
+  updateSearchFilter = _debounce(search => this.setState({search}), 250);
 
   loadData() {
     return request('adslots');
@@ -67,7 +73,7 @@ export default class AdList extends Component {
 
   render() {
     const {
-      adslots, type, format, formatOptions, loading, search,
+      adslots, type, format, formatOptions, loading, search, searchValue
     } = this.state;
     return (
       <Dimmer.Dimmable as={'div'} dimmed={loading}>
@@ -80,7 +86,7 @@ export default class AdList extends Component {
               <Input
                 label="Search" placeholder="Search ..."
                 fluid icon="search"
-                value={search}
+                value={searchValue}
                 onChange={this.handleSearchChange}
               />
               <Select
