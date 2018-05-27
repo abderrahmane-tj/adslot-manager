@@ -5,15 +5,13 @@ import {
   Divider,
   Form,
   Grid,
-  Icon, Loader,
+  Loader,
 } from 'semantic-ui-react';
-import DataTable from '../Shared/DataTable';
-import {AD_TYPE} from '../../config/constants';
+import {AD_TYPE, ALL} from '../../config/constants';
 import {request} from '../../helpers/Http';
+import Table from './Table';
 
 const {Input, Select} = Form;
-
-const ALL = '--all--';
 
 const typeOptions = [
   // the use of --all-- as the first option value is a temporary fix,
@@ -24,42 +22,8 @@ const typeOptions = [
   {text: 'Audio', value: AD_TYPE.AUDIO},
   {text: 'Video', value: AD_TYPE.VIDEO},
 ];
-export default class AdList extends Component {
-  columns = [
-    {name: 'name', title: 'Name'},
-    {
-      name: 'type', title: 'Type',
-      render(value) {
-        let dict = {
-          [AD_TYPE.WEB]: 'world',
-          [AD_TYPE.APP]: 'mobile',
-          [AD_TYPE.AUDIO]: 'music',
-          [AD_TYPE.VIDEO]: 'record',
-        };
-        return <Icon name={dict[value]} />;
-      },
-      props: {
-        textAlign: 'center',
-      },
-      headerProps: {
-        textAlign: 'center',
-      },
-    },
-    {name: 'url', title: 'URL'},
-    {name: 'format', title: 'Format'},
-    {name: 'price', title: 'Price'},
-    {
-      name: 'fallback', title: 'Fallback',
-      render: v => v ? <Icon name="checkmark" color="green" /> : null,
-      props: {
-        textAlign: 'center',
-      },
-      headerProps: {
-        textAlign: 'center',
-      },
-    },
-  ];
 
+export default class AdList extends Component {
   state = {
     adslots: [],
     type: ALL,
@@ -144,10 +108,7 @@ export default class AdList extends Component {
             </Form>
           </Grid.Column>
           <Grid.Column width={13}>
-            <DataTable
-              columnDefs={this.columns}
-              data={adslots}
-            />
+            <Table data={adslots} type={type} format={format} search={search} />
           </Grid.Column>
         </Grid>
       </Dimmer.Dimmable>
