@@ -6,17 +6,18 @@ import {Link} from 'react-router-dom';
 const {Input, Select, Checkbox} = Form;
 const typeOptions = [
   {text: 'Choose ...', value: NONE},
-  ...TYPE_OPTIONS
+  ...TYPE_OPTIONS,
 ];
 
 export default class AdForm extends Component {
   state = {
+    editing: false,
     name: '',
     type: NONE,
     url: '',
     format: '',
     price: 0,
-    fallback: false
+    fallback: false,
   };
 
   handleTypeChange = (e, {value: type}) => this.setState({type});
@@ -30,15 +31,27 @@ export default class AdForm extends Component {
     e.preventDefault();
   };
 
+  static getDerivedStateFromProps(props, prevState) {
+    const {match: {params, params: {id}}} = props;
+    if (id !== prevState.id) {
+      if (params.hasOwnProperty('id') && id !== 'new') {
+        return {id, editing: true};
+      } else {
+        return {id, editing: false};
+      }
+    }
+    return null;
+  }
+
   componentDidMount() {
 
   }
 
   render() {
-    const {match: {params: {id}}} = this.props;
     const {
-      name, type, url, format, price, fallback
+      name, type, url, format, price, fallback, editing,
     } = this.state;
+
     return (
       <Form onSubmit={this.handleSubmit}>
         <Input
@@ -79,8 +92,8 @@ export default class AdForm extends Component {
             to="/list"
           />
           <Button
-            content="Create Ad"
-            labelPosition='right'
+            content={editing ? 'Update' : 'Save'}
+            labelPosition="right"
             floated="right"
             icon="check"
             positive
