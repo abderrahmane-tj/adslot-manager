@@ -13,7 +13,7 @@ export default class App extends Component {
             <Link to="/"><Header as='h1'>Adslots Manager</Header></Link>
             <Divider hidden />
             <Switch>
-              <Route path="/ad/:id" component={AdForm} />
+              <Route path="/adslots/:id" component={AdForm} />
               <Route path="/" component={AdList} />
             </Switch>
           </Grid.Column>

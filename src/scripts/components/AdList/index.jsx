@@ -39,7 +39,7 @@ export default class AdList extends Component {
   };
   updateSearchFilter = _debounce(search => this.setState({search}), 250);
 
-  handleRowDoubleClick = ({id}) => this.props.history.push(`/ad/${id}`);
+  handleRowDoubleClick = ({id}) => this.props.history.push(`/adslots/${id}`);
 
   loadData() {
     return request('adslots');
@@ -109,7 +109,7 @@ export default class AdList extends Component {
                 icon="plus"
                 positive
                 as={Link}
-                to="/ad/new"
+                to="/adslots/new"
               />
             </Form>
           </Grid.Column>
