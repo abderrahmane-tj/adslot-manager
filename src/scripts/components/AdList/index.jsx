@@ -8,8 +8,7 @@ import {
   Grid,
   Loader,
 } from 'semantic-ui-react';
-import {ALL, TYPE_OPTIONS} from '../../config/constants';
-import {request} from '../../helpers/Http';
+import {ALL, API_URL, TYPE_OPTIONS} from '../../config/constants';
 import Table from './Table';
 import {Link} from 'react-router-dom';
 
@@ -42,7 +41,9 @@ export default class AdList extends Component {
   handleRowDoubleClick = ({id}) => this.props.history.push(`/adslots/${id}`);
 
   loadData() {
-    return request('adslots');
+    return fetch(`${API_URL}/adslots`)
+    .then(r => r.json())
+    .then(r => r.data);
   }
 
   buildFormatOptions(adslots) {

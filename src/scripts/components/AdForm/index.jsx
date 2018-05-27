@@ -3,7 +3,6 @@ import {Button, Dimmer, Divider, Form, Loader} from 'semantic-ui-react';
 import {Link} from 'react-router-dom';
 import _pick from 'lodash/pick';
 import {API_URL, NONE, TYPE_OPTIONS} from '../../config/constants';
-import {request} from '../../helpers/Http';
 
 const {Input, Select, Checkbox} = Form;
 const typeOptions = [
@@ -40,7 +39,7 @@ export default class AdForm extends Component {
     let path = editing ? `adslots/${id}` : 'adslots';
     let body = JSON.stringify(_pick(this.state, formFields));
 
-    fetch(API_URL + path, {
+    fetch(`${API_URL}/${path}`, {
       method,
       body,
       headers: {
@@ -72,9 +71,17 @@ export default class AdForm extends Component {
     const {editing, id} = this.state;
     if (editing) {
       this.setState({loading: true});
-      request(`adslots/${id}`).then(({adslot}) => {
-        this.setState({..._pick(adslot, formFields), loading: false});
-      });
+      fetch(`${API_URL}/adslots/${id}`)
+      .then(r => r.json())
+      .then(result => {
+        if(result.data) {
+          this.setState({
+            ..._pick(result.data.adslot, formFields),
+            loading: false
+          });
+        }
+      })
+      .catch(e => console.log(e));
     }
   }
 
