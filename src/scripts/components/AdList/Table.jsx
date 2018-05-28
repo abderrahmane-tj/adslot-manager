@@ -2,7 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import DataTable from '../Shared/DataTable';
 import {AD_TYPE, ALL} from '../../config/constants';
-import {Icon} from 'semantic-ui-react';
+import {Button, Icon} from 'semantic-ui-react';
+import {Link} from 'react-router-dom';
 
 const columns = [
   {name: 'name', title: 'Name'},
@@ -37,6 +38,18 @@ const columns = [
       textAlign: 'center',
     },
   },
+  {
+    name: '', title: '', render(value, row) {
+      return (
+        <Button
+          circular
+          icon="pencil"
+          as={Link}
+          to={`/adslots/${row.id}`}
+        />
+      );
+    },
+  },
 ];
 
 function applyFilters({data, search, type, format}) {
@@ -45,7 +58,7 @@ function applyFilters({data, search, type, format}) {
       (ad.id === search || ad.name.includes(search))
       && (type === ALL || ad.type === type)
       && (format === ALL || ad.format === format)
-    )
+    );
   });
 }
 
@@ -64,7 +77,7 @@ export default class Table extends Component {
       ...(format !== prevState.format && {format}),
     };
 
-    if(Object.keys(newState).length) {
+    if (Object.keys(newState).length) {
       newState['displayData'] = applyFilters(props);
       return newState;
     } else {
@@ -73,14 +86,14 @@ export default class Table extends Component {
   }
 
   render() {
-    const { displayData } = this.state;
+    const {displayData} = this.state;
     return (
       <DataTable
         columnDefs={columns}
         data={displayData}
         onRowDoubleClick={this.props.onRowDoubleClick}
       />
-    )
+    );
   }
 }
 
